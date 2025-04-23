@@ -1,0 +1,14 @@
+Create new React app
+--------------------
+Change to directory below where you want to create the app, the command will create the folder
+
+npx create-react-app app-name --template typescript
+(deprecated)
+
+Use vite:
+npm create vite@latest my-app -- --template react-ts
+npm install
+npm run dev
+
+this command creates a folder for the app or use . for app name to create in current folder
+

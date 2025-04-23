@@ -1,0 +1,60 @@
+Game Library React app with ASP.NET Core Web API
+------------------------------------------------
+
+TURN ON VS CODE ANALYSIS!!
+
+
+Functionality (V1):
+- Enter basic game detail (title, genre)
+- Add/Edit/Delete game
+- Game list 
+- Admin area for lists (genre)
+
+Functionality (V2):
+- Backlog 
+- Trophy detail
+
+Functionality (V3):
+- Login/Users (Identity Core?)
+
+Backend
+-------
+Entity Framework Core - Web API
+ - Migrations 
+ - Async
+Validation 
+SQL Server 
+ - Game
+   - ID (PK, Identity)
+   - Title
+   - GenreID (FK)
+ - Genre
+   - ID (PK, Identity)
+   - Name
+
+Frontend
+---------
+mui - scaffold basic UI 
+ - app bar with menu
+ - v3 will have user account on top bar
+
+Controls needed:
+ - Text input
+ - Dropdown
+ - Grid
+ - Async support
+ - Message support
+ - Layout support/Responsive design
+
+React/TS 
+ - React Router
+Validation
+
+Unit Tests - Backend
+--------------------
+Web API Tests
+
+
+Unit Tests - Frontend (Selenium)
+---------------------------------
+Selenium scenarios and build up util library
