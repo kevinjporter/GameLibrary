@@ -2,21 +2,43 @@ import { DashboardLayout } from '@toolpad/core';
 import { AppProvider, Navigation } from '@toolpad/core'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import { SportsEsportsOutlined } from '@mui/icons-material';
 import { useDemoRouter } from '@toolpad/core/internal';
 import { Box, Typography } from '@mui/material';
 
 const NAVIGATION: Navigation = [
   {
+    kind: 'header',
+    title: 'Games',
+  },
+  {
     segment: 'games',
     title: 'Game List',
-    icon: <DashboardIcon />,
+    icon: <DashboardIcon />
   },
   {
     segment: 'add-game',
     title: 'Add Game',
-    icon: <AddCircleOutlineIcon />,
+    icon: <AddCircleOutlineIcon />
   },
+  {
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Genres'
+  },
+  {
+    segment: 'genres',
+    title: 'Genre List',
+    icon: <ContentPasteIcon />
+  },
+  {
+    segment: 'add-genre',
+    title: 'Add Genre',
+    icon: <AddCircleOutlineIcon />
+  }
 ];
 
 function App() {
