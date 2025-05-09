@@ -1,11 +1,11 @@
-import { DashboardLayout } from '@toolpad/core';
-import { AppProvider, Navigation } from '@toolpad/core'
+import { Navigation } from '@toolpad/core'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import { SportsEsportsOutlined } from '@mui/icons-material';
-import { useDemoRouter } from '@toolpad/core/internal';
 import { Box, Typography } from '@mui/material';
+import { ReactRouterAppProvider } from '@toolpad/core/react-router';
+import { Outlet } from 'react-router';
+
 
 const NAVIGATION: Navigation = [
   {
@@ -41,40 +41,16 @@ const NAVIGATION: Navigation = [
   }
 ];
 
-function App() {
-  const router = useDemoRouter('/page');
-
-  return (
-    <AppProvider
-      navigation={NAVIGATION}
-      router={router}>  
-      <DashboardLayout
-        branding={{
-          logo: <SportsEsportsOutlined/>,
-          title: 'Game Library',
-          homeUrl: '/',
-      }}>
-        <DemoPageContent pathname={router.pathname} />
-      </DashboardLayout>
-    </AppProvider>
-
-  )
+const BRANDING = {
+  title: "Game List App"
 }
 
-function DemoPageContent({ pathname }: { pathname: string }) {
+function App() {
   return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography>Dashboard content for {pathname}</Typography>
-    </Box>
-  );
+    <ReactRouterAppProvider navigation={NAVIGATION} branding={BRANDING}>
+      <Outlet />
+    </ReactRouterAppProvider>    
+  )
 }
 
 export default App
