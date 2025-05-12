@@ -1,4 +1,6 @@
 using GameLibrary.API.Contexts;
+using GameLibrary.API.Repositories;
+using GameLibrary.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +10,26 @@ var connectionString =
         ?? throw new InvalidOperationException("Connection string"
         + "'DefaultConnection' not found.");
 
+var corsName = "AllowWebApiCallsFromReactFrontEnd";
+
 // Add services to the container.
 builder.Services.AddDbContext<GameLibraryDbContext>(opts =>
 {
     opts.UseSqlServer(connectionString);
 });
+
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: corsName, policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .WithMethods("GET", "POST", "PUT", "DELETE");
+    });
+});
+
+
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsName);
 
 app.UseAuthorization();
 
