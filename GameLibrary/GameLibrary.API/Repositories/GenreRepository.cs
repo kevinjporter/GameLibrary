@@ -16,10 +16,10 @@ public class GenreRepository : IGenreRepository, IDisposable
 
     #region IGenreRepository
 
-    public void InsertGenre(Genre genre)
+    public async Task InsertGenreAsync(Genre genre)
     {
         _dbContext.Genres.Add(genre);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
     #endregion

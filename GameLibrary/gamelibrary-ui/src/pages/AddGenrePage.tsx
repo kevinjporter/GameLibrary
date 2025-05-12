@@ -6,10 +6,13 @@ import { isNullOrEmpty } from "../utils";
 function AddGenrePage() {
     const [genre, setGenre] = useState<string>("");
     const [hasError, setHasError] = useState<boolean>(false);
+    const [isSaving, setIsSaving] = useState<boolean>(false);
 
     const notifications = useNotifications();
 
     const addGenre = async () => {
+        setIsSaving(true);
+
         await fetch('http://localhost:5261/api/Genre', {
             method: 'POST',
             body: JSON.stringify({
@@ -20,6 +23,8 @@ function AddGenrePage() {
             },
         })
         .then(() => {
+            setIsSaving(false);
+
             notifications.show("New genre saved", {
                 autoHideDuration: 2000,
                 severity: "success"
@@ -27,6 +32,7 @@ function AddGenrePage() {
             resetForm();
         })
         .catch((err) => {
+            setIsSaving(false);
             notifications.show(`An error has occurred: ${err.message}`, {
                 autoHideDuration: 2000,
                 severity: "error"
@@ -64,7 +70,13 @@ function AddGenrePage() {
                     justifyContent: "flex-end",
                     alignItems: "flex-end"
                 }}>
-                    <Button variant="contained" onClick={() => saveGenre()}>Save</Button>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => saveGenre()}
+                        loading={isSaving}
+                        loadingPosition="end">
+                        Save
+                    </Button>
                     <Button variant="outlined" onClick={() => resetForm()}>Cancel</Button>
                 </Stack>
             </Box>

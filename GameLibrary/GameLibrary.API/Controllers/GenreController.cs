@@ -22,7 +22,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Insert(Genre genre)
+    public async Task<IActionResult> Insert(Genre genre)
     {
         try
         {
@@ -30,7 +30,7 @@ public class GenreController : ControllerBase
 
             if (!validationResult.IsValid) return BadRequest(validationResult.Message);
 
-            genreRepository.InsertGenre(genre);
+            await genreRepository.InsertGenreAsync(genre);
         }
         catch (Exception ex)
         {
