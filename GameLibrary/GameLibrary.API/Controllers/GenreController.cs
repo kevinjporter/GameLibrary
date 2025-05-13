@@ -3,6 +3,7 @@ using GameLibrary.API.Repositories.Interfaces;
 using GameLibrary.API.Validation;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -21,6 +22,21 @@ public class GenreController : ControllerBase
         this.genreValidator = genreValidator;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            var genres = await genreRepository.GetAllAsync();
+
+            return Ok(genres);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> Insert(Genre genre)
     {
@@ -30,7 +46,7 @@ public class GenreController : ControllerBase
 
             if (!validationResult.IsValid) return BadRequest(validationResult.Message);
 
-            await genreRepository.InsertGenreAsync(genre);
+            await genreRepository.InsertAsync(genre);
         }
         catch (Exception ex)
         {

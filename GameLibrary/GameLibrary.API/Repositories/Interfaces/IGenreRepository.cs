@@ -4,5 +4,6 @@ namespace GameLibrary.API.Repositories.Interfaces;
 
 public interface IGenreRepository
 {
-    Task InsertGenreAsync(Genre genre);
+    Task<List<Genre>> GetAllAsync();
+    Task InsertAsync(Genre genre);
 }

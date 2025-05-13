@@ -1,6 +1,7 @@
 ﻿using GameLibrary.API.Contexts;
 using GameLibrary.API.Entities;
 using GameLibrary.API.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameLibrary.API.Repositories;
 
@@ -16,7 +17,12 @@ public class GenreRepository : IGenreRepository, IDisposable
 
     #region IGenreRepository
 
-    public async Task InsertGenreAsync(Genre genre)
+    public async Task<List<Genre>> GetAllAsync()
+    {
+        return await _dbContext.Genres.OrderBy(g => g.Name).ToListAsync();
+    }
+
+    public async Task InsertAsync(Genre genre)
     {
         _dbContext.Genres.Add(genre);
         await _dbContext.SaveChangesAsync();
