@@ -7,7 +7,7 @@ import Layout from './layout/Dashboard.tsx';
 import GameListPage from './pages/GameListPage.tsx';
 import GenreListPage from './pages/GenreListPage.tsx';
 import AddGamePage from './pages/AddGamePage.tsx';
-import AddGenrePage from './pages/AddGenrePage.tsx';
+import GenrePage from './pages/GenrePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +33,13 @@ const router = createBrowserRouter([
           },
 
           {
-            path: 'add-genre',
-            Component: AddGenrePage
+            path: 'genre',
+            Component: GenrePage
+          },
+
+          {
+            path: 'genre/:genreId',
+            Component: GenrePage
           }
         ]       
       }

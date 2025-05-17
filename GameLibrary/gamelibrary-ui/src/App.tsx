@@ -2,7 +2,6 @@ import { Navigation } from '@toolpad/core'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import { Box, Typography } from '@mui/material';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
 import { Outlet } from 'react-router';
 
@@ -35,7 +34,7 @@ const NAVIGATION: Navigation = [
     icon: <ContentPasteIcon />
   },
   {
-    segment: 'add-genre',
+    segment: 'genre',
     title: 'Add Genre',
     icon: <AddCircleOutlineIcon />
   }

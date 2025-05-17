@@ -1,15 +1,42 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { useNotifications } from "@toolpad/core/useNotifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isNullOrEmpty } from "../utils";
+import { useNavigate, useParams } from 'react-router';
 
-function AddGenrePage() {
+function GenrePage() {
     const [genre, setGenre] = useState<string>("");
     const [hasError, setHasError] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
     const notifications = useNotifications();
+    const navigate = useNavigate();    
 
+    const params = useParams();
+    const genreId = Number(params.genreId) ?? 0;
+
+    useEffect(() => {
+        if (genreId == 0) return;
+
+        loadGenre();
+    }, []);
+
+    const loadGenre = async () => {
+        try
+        {
+            const response = await fetch("http://localhost:5261/api/Genre/" + genreId);
+            const data = await response.json();
+            setGenre(data.name);
+        }
+        catch (err)
+        {
+            notifications.show(`An error has occurred: ${err}`, {
+                autoHideDuration: 2000,
+                severity: "error"
+            })
+        }
+    };
+    
     const addGenre = async () => {
         setIsSaving(true);
 
@@ -40,12 +67,42 @@ function AddGenrePage() {
         });
     };
 
+    const updateGenre = async () => {
+        setIsSaving(true);
+
+        await fetch('http://localhost:5261/api/Genre', {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: genreId,
+                name: genre
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(() => {
+            setIsSaving(false);
+            navigate(-1);
+        })
+        .catch((err) => {
+            setIsSaving(false);
+            notifications.show(`An error has occurred: ${err.message}`, {
+                autoHideDuration: 2000,
+                severity: "error"
+            })
+        });
+    }
+
     function saveGenre() {
         if (isNullOrEmpty(genre)) {
             setHasError(true);
+            return;
         }     
         
-        addGenre();
+        if (genreId == 0) 
+            addGenre();
+        else
+            updateGenre();
     }
 
     function resetForm() {
@@ -84,4 +141,4 @@ function AddGenrePage() {
     )
 }
 
-export default AddGenrePage
+export default GenrePage

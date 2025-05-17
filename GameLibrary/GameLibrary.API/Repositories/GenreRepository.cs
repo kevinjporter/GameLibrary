@@ -22,9 +22,29 @@ public class GenreRepository : IGenreRepository, IDisposable
         return await _dbContext.Genres.OrderBy(g => g.Name).ToListAsync();
     }
 
+    public async Task<Genre> GetByIdAsync(int genreId)
+    {
+        return await _dbContext.Genres.SingleAsync(g => g.Id == genreId);
+    }
+
     public async Task InsertAsync(Genre genre)
     {
         _dbContext.Genres.Add(genre);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Genre genre)
+    {
+        var existingGenre = await _dbContext.Genres.SingleAsync(g => g.Id == genre.Id);
+        existingGenre.Name = genre.Name;
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int genreId)
+    {
+        var existingGenre = await _dbContext.Genres.SingleAsync(g => g.Id == genreId);
+
+        _dbContext.Genres.Remove(existingGenre);
         await _dbContext.SaveChangesAsync();
     }
 
