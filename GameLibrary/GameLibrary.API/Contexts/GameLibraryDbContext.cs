@@ -8,7 +8,6 @@ public class GameLibraryDbContext : DbContext
     public GameLibraryDbContext(DbContextOptions<GameLibraryDbContext> options)
         : base(options)
     {
-        Database.EnsureCreated();
     }
 
     public DbSet<Game> Games { get; set; }
